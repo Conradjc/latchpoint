@@ -52,6 +52,23 @@
     border-radius: 2px;
   }
 
+  /*
+    The inquiry form sits on slate, so its controls are styled `text-white`.
+    A <select>'s option list is drawn by the OS, not the page — it inherits the
+    white text but keeps a white system background, making every option
+    invisible. `color-scheme: dark` tells the browser to draw the popup dark so
+    the inherited white text is legible; the explicit `option` rule is the
+    fallback for engines that ignore it.
+  */
+  select {
+    color-scheme: dark;
+  }
+
+  select option {
+    background-color: var(--color-primary-deep);
+    color: #fff;
+  }
+
   h1, h2, h3 {
     text-wrap: balance;
   }
