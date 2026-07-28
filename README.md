@@ -65,7 +65,7 @@ redirect rule sending `www` to the apex.
 | What | Where | Notes |
 |---|---|---|
 | `TODO_CALENDAR_URL` | [`src/components/FooterCta.astro`](src/components/FooterCta.astro) | The CTA is an inert `<button>` until a Cal.com / Calendly link exists. Pass it as `href` to `CtaButton` and it becomes a link. The hero CTA needs no change — it scrolls to `#book`. |
-| `TODO_PORTAL_URL` | [`src/components/PortalLink.astro`](src/components/PortalLink.astro) | The header "Project Portal" link renders as muted text marked *(soon)* until a destination exists. Pass `href` to `PortalLink` in [`Header.astro`](src/components/Header.astro) and it becomes a real link. |
+| `TODO_PORTAL_URL` | [`src/components/PortalLink.astro`](src/components/PortalLink.astro) | Destination decided — `https://projects.latchpoint.co` — but not built yet, so the header link renders as muted text marked *(soon)*. Pass `href` to `PortalLink` in [`Header.astro`](src/components/Header.astro) once the portal is live. Portal architecture and Access gotchas are in [`CLAUDE.md`](CLAUDE.md). |
 | `caleb@latchpoint.co` | not yet on the page | Waiting on Google Workspace. |
 | Logo | [`src/components/Logo.astro`](src/components/Logo.astro), [`public/favicon.svg`](public/favicon.svg) | Placeholder mark — an open square latched shut at one corner. Refine later. |
 

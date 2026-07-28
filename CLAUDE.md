@@ -41,10 +41,21 @@ Ship a fast, responsive, single-page consulting site from `design-brief.md`, dep
 - Keep it a static build so it deploys clean to Pages/Netlify.
 
 ## Hosting / deploy
-- Connect this repo to **Cloudflare Pages** or **Netlify** → auto-deploy on push to `main`.
+- This repo deploys to **Cloudflare Workers static assets** (`wrangler.jsonc`, no Worker script) → auto-deploy on push to `main` via Workers Builds.
 - Point apex `latchpoint.co` (+ `www`) at the deploy.
-- **CCKennels (separate repo), temporary:** deploy that repo the same way, then either attach `cckennels.latchpoint.co` (subdomain) **or** just use its free preview URL (`*.pages.dev` / `*.netlify.app`) until its real domain is ready.
+- **CCKennels (separate repo), temporary:** deploy that repo the same way, then either attach `cckennels.latchpoint.co` (subdomain) **or** just use its free preview URL until its real domain is ready.
 - Add `noindex` on any temporary/staging subdomain so it isn't indexed under Latchpoint.
+
+## Subdomain map — keep these distinct
+| Host | What it is |
+|---|---|
+| `latchpoint.co` | This repo. The marketing site. |
+| `projects.latchpoint.co` | **Client portal** (own repo, not yet built). Per-project pages: content, resources, updates. Linked from the header of this site. |
+| `cckennels.latchpoint.co` | The **actual Coulee Country Kennels website**, temporarily hosted. Their site, not a page about the work. |
+
+`cckennels.latchpoint.co` and `projects.latchpoint.co/cckennels` are two different
+things for the same client — the site itself versus the project page about it.
+Do not collapse them.
 
 ## Definition of done (v1)
 - All 6 sections built, responsive, on-brand.
@@ -55,8 +66,32 @@ Ship a fast, responsive, single-page consulting site from `design-brief.md`, dep
 
 ## Later (not now)
 - Build the CCKennels site (its own repo).
-- Swap placeholders: calendar, email, real logo.
+- Build the client portal at `projects.latchpoint.co` — see below.
+- Swap placeholders: calendar, portal, email, real logo.
 - Analytics, extra pages, blog, case studies.
+
+## Client portal — decided, not yet built
+Own repo, own Worker, own deploy. Kept separate from this site so a bad deploy
+on one cannot take down the other, and so client content is never coupled to
+marketing releases.
+
+**Access is per project, not per site.** Some project pages are gated, others
+are public-but-noindex — decided per client. Cloudflare Access supports this
+with path-scoped applications on the free Zero Trust tier (up to 50 users),
+with gated clients signing in via an emailed one-time code.
+
+Two traps to avoid when configuring it:
+- **Never create an Access application at the root of `projects.latchpoint.co`.**
+  Paths with no explicit rule inherit their parent's, so a root policy silently
+  locks every project, including the ones meant to be public.
+- **`/client/*` does not match the bare `/client`.** Scope each gated project so
+  the un-suffixed path is covered too, or that URL is served with no
+  authentication at all. Verify by requesting the bare path in a private window
+  before handing the link to a client.
+
+Public-but-noindex pages need `noindex` in the markup — `robots.txt` asks
+crawlers not to visit but does not stop a page that gets linked from being
+indexed. `BaseLayout` in this repo already takes a `noindex` prop; mirror it.
 
 ---
 *v1 shipped. See `README.md` for dev, build, and deploy steps.*
