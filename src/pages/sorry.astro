@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+
+// Failure destination for the inquiry form: the send failed, or validation
+// rejected the submission. A separate page rather than a query string on
+// /thanks/, because this build is static and cannot branch per request.
+---
+
+<BaseLayout
+  title="Something went wrong — Latchpoint"
+  description="Your request did not go through."
+  noindex
+>
+  <Header />
+  <main class="bg-primary text-white">
+    <div class="mx-auto max-w-3xl px-6 py-24 sm:py-32">
+      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+        That did not go through.
+      </h1>
+      <p class="mt-6 text-lg leading-relaxed text-white/80">
+        Something broke on my end, or a required field came through empty.
+        Rather than make you retype the whole thing, email me directly at{' '}
+        <a
+          href="mailto:hello@latchpoint.co"
+          class="text-accent underline underline-offset-4"
+        >
+          hello@latchpoint.co
+        </a>{' '}
+        and I will pick it up from there.
+      </p>
+      <p class="mt-10">
+        <a href="/#book" class="text-accent underline underline-offset-4">
+          Back to the form
+        </a>
+      </p>
+    </div>
+  </main>
+</BaseLayout>

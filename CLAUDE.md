@@ -70,6 +70,41 @@ Do not collapse them.
 - Swap placeholders: calendar, portal, email, real logo.
 - Analytics, extra pages, blog, case studies.
 
+## Inquiry form — email setup
+
+The CTA is a questionnaire that emails the submission, not a calendar booking.
+Form posts to `/api/inquiry`, handled by `src/worker.ts`.
+
+**Use Email SENDING. Never enable Email ROUTING on this domain.** The MX records
+point at `smtp.google.com` — Google Workspace runs `caleb@latchpoint.co` and
+`hello@latchpoint.co`. Email Routing replaces the apex MX records and, per
+Cloudflare's own docs, "cannot be used with external mail servers." Turning it
+on would take down business email immediately.
+
+Email Sending is safe by comparison: it puts MX, SPF and DKIM on the
+`cf-bounce.latchpoint.co` subdomain and uses the `cf-bounce._domainkey`
+selector, which does not collide with `google._domainkey`. The one record it
+touches on the apex is **DMARC** — check for an existing `_dmarc` record before
+onboarding and merge rather than overwrite.
+
+Setup, once:
+1. Dashboard → **Compute & AI → Email Service → Email Sending → Onboard Domain**
+   → `latchpoint.co`. (The `wrangler email sending` CLI commands return
+   `Unauthorized [2036]` on a token from plain `wrangler login`.)
+2. `npx wrangler secret put INQUIRY_TO` → the destination inbox. Kept out of the
+   repo so it is not scraped from a public GitHub mirror.
+
+**Free vs paid.** Sending to *arbitrary* recipients requires the Workers Paid
+plan. Sending to a **verified destination address** in the account is free on
+every plan. For the free path, verify the recipient with
+`npx wrangler email routing addresses create <address>` and restrict the
+binding in `wrangler.jsonc`:
+`"send_email": [{ "name": "EMAIL", "destination_address": "<address>" }]`.
+As of this writing the account has **no** verified destination addresses.
+
+Spam control is a honeypot field only. If it starts leaking through, add
+Turnstile — but note that costs the site its zero-JavaScript property.
+
 ## Client portal — decided, not yet built
 Own repo, own Worker, own deploy. Kept separate from this site so a bad deploy
 on one cannot take down the other, and so client content is never coupled to

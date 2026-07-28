@@ -1,0 +1,121 @@
+---
+/*
+  Replaces the booking button. Native form POST — no JavaScript, so the page
+  still ships zero JS. The Worker at /api/inquiry emails the submission and
+  redirects to /thanks.
+
+  Only email and the "what's slowing you down" answer are required. Every extra
+  required field costs completions, and the rest is nice-to-have context that a
+  reply can uncover anyway.
+*/
+const field =
+  'mt-2 w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 ' +
+  'text-white placeholder:text-white/40 focus:border-accent focus:outline-none ' +
+  'focus:ring-2 focus:ring-accent/50';
+const labelCls = 'block text-sm font-medium text-white/90';
+---
+
+<form method="POST" action="/api/inquiry" class="mt-10 text-left">
+  {/*
+    Honeypot. Real people never see or fill this; most bots fill every input
+    they find. Hidden from assistive tech too, so nobody is asked to complete a
+    field that must stay empty.
+  */}
+  <div class="absolute left-[-9999px]" aria-hidden="true">
+    <label>
+      Company website
+      <input type="text" name="website" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label class={labelCls} for="name">Name</label>
+      <input class={field} type="text" id="name" name="name" autocomplete="name" />
+    </div>
+
+    <div>
+      <label class={labelCls} for="email">
+        Email <span class="text-accent">*</span>
+      </label>
+      <input
+        class={field}
+        type="email"
+        id="email"
+        name="email"
+        required
+        autocomplete="email"
+      />
+    </div>
+
+    <div>
+      <label class={labelCls} for="company">Company</label>
+      <input
+        class={field}
+        type="text"
+        id="company"
+        name="company"
+        autocomplete="organization"
+      />
+    </div>
+
+    <div>
+      <label class={labelCls} for="teamSize">Team size</label>
+      <select class={field} id="teamSize" name="teamSize">
+        <option value="">Select one</option>
+        <option>Just me</option>
+        <option>2–10</option>
+        <option>11–50</option>
+        <option>51–200</option>
+        <option>200+</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <label class={labelCls} for="problem">
+      What's slowing you down <span class="text-accent">*</span>
+    </label>
+    <textarea
+      class={field}
+      id="problem"
+      name="problem"
+      rows="4"
+      required
+      placeholder="The thing that takes longer than it should, or the handoff that keeps stalling."
+    ></textarea>
+  </div>
+
+  <div class="mt-6">
+    <label class={labelCls} for="tools">Tools you already use</label>
+    <textarea
+      class={field}
+      id="tools"
+      name="tools"
+      rows="2"
+      placeholder="QuickBooks, Jobber, a shared spreadsheet, whatever it is."
+    ></textarea>
+  </div>
+
+  <div class="mt-6">
+    <label class={labelCls} for="timeline">Timeline</label>
+    <select class={field} id="timeline" name="timeline">
+      <option value="">Select one</option>
+      <option>As soon as possible</option>
+      <option>Next month or two</option>
+      <option>This quarter</option>
+      <option>Just exploring</option>
+    </select>
+  </div>
+
+  <button
+    type="submit"
+    class="mt-8 w-full rounded-lg bg-accent px-7 py-4 text-base font-semibold text-ink transition hover:brightness-95 active:brightness-90 sm:w-auto sm:text-lg"
+  >
+    Request a free systems audit
+  </button>
+
+  <p class="mt-4 text-sm text-white/60">
+    Goes straight to my inbox. No list, no sequence, no sales team.
+  </p>
+</form>

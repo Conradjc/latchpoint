@@ -1,17 +1,36 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "latchpoint",
+  "main": "src/worker.ts",
   "compatibility_date": "2026-07-27",
 
-  // No "main" field: this deploys static assets only, with no Worker script.
-  // Because there is no Worker, `run_worker_first` stays at its default of
-  // false and every request is served straight from the asset store.
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
 
     // "404-page" serves dist/404.html with a real 404 status.
     // The "single-page-application" mode would return the homepage with a 200
     // for every unknown URL, which search engines treat as a soft 404.
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+
+    // Only the form endpoint reaches the Worker. Every page, image and font is
+    // served straight from the asset store, so Worker invocations stay near
+    // zero and the free tier's 100k/day is never in play. `true` here would
+    // route every request through the Worker for no benefit.
+    "run_worker_first": ["/api/*"]
+  },
+
+  // Outbound mail for the inquiry form. Requires latchpoint.co to be onboarded
+  // to Email SENDING — not Email Routing, which would replace the apex MX
+  // records and break Google Workspace mail. See CLAUDE.md.
+  "send_email": [{ "name": "EMAIL" }],
+
+  "vars": {
+    // The From address. Must be on a domain onboarded to Email Sending.
+    "INQUIRY_FROM": "hello@latchpoint.co"
+  },
+
+  "observability": {
+    "enabled": true
   }
 }

@@ -26,8 +26,30 @@ npm run dev          # http://localhost:4321
 ```bash
 npm run build        # → dist/
 npm run preview      # serve dist/ with Astro's preview server
-npx wrangler dev     # serve dist/ the way Workers will, including 404 handling
+npx wrangler dev     # runs the Worker too — needed to exercise the form
 ```
+
+To test the form locally, create `.dev.vars` (gitignored) with
+`INQUIRY_TO=you@example.com`. Under `wrangler dev` the email is not actually
+sent — it is written to `.wrangler/tmp/email/` and the path is printed, so you
+can read exactly what would have gone out.
+
+## The inquiry form
+
+The CTA is a questionnaire, not a calendar booking. It is a native form POST to
+`/api/inquiry` handled by [`src/worker.ts`](src/worker.ts), so the page still
+ships zero JavaScript. Submissions redirect to `/thanks/`, failures to
+`/sorry/` — two static pages rather than one page branching on a query string,
+because a prerendered build evaluates `Astro.url.searchParams` at build time
+and cannot vary per request.
+
+`run_worker_first` is scoped to `/api/*`, so every page and asset is served
+straight from the asset store and never invokes the Worker.
+
+**Email setup is a prerequisite and has a sharp edge — read the Inquiry form
+section of [`CLAUDE.md`](CLAUDE.md) before touching Cloudflare email settings.**
+Short version: onboard the domain to Email *Sending*; never enable Email
+*Routing*, which would break the existing Google Workspace mail.
 
 ## Deploy
 
@@ -64,7 +86,7 @@ redirect rule sending `www` to the apex.
 
 | What | Where | Notes |
 |---|---|---|
-| `TODO_CALENDAR_URL` | [`src/components/FooterCta.astro`](src/components/FooterCta.astro) | The CTA is an inert `<button>` until a Cal.com / Calendly link exists. Pass it as `href` to `CtaButton` and it becomes a link. The hero CTA needs no change — it scrolls to `#book`. |
+| `INQUIRY_TO` secret | Cloudflare | The form's destination inbox. Set with `npx wrangler secret put INQUIRY_TO`. Until it exists — and until `latchpoint.co` is onboarded to Email Sending — submissions land on `/sorry/`. See [`CLAUDE.md`](CLAUDE.md). |
 | `TODO_PORTAL_URL` | [`src/components/PortalLink.astro`](src/components/PortalLink.astro) | Destination decided — `https://projects.latchpoint.co` — but not built yet, so the header link renders as muted text marked *(soon)*. Pass `href` to `PortalLink` in [`Header.astro`](src/components/Header.astro) once the portal is live. Portal architecture and Access gotchas are in [`CLAUDE.md`](CLAUDE.md). |
 | `caleb@latchpoint.co` | not yet on the page | Waiting on Google Workspace. |
 | Logo | [`src/components/Logo.astro`](src/components/Logo.astro), [`public/favicon.svg`](public/favicon.svg) | Placeholder mark — an open square latched shut at one corner. Refine later. |
