@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — source of truth is design-brief.md.
+
+  Names are deliberately semantic (primary/accent/support) rather than literal
+  (slate/amber/gray): Tailwind v4 already owns `slate-*`, `amber-*` and `gray-*`
+  as built-in palette namespaces, and reusing those names here would clobber the
+  whole built-in scale.
+
+  Contrast, verified against WCAG AA (4.5:1 body, 3:1 large text):
+    ink on surface ........ 16.9:1  body copy
+    white on primary ...... 11.4:1  text on slate bands
+    ink on accent .......... 8.7:1  the CTA button
+    accent on primary ...... 5.7:1  amber highlights, slate backgrounds only
+    support on surface ..... 4.6:1  passes, but secondary text only
+    accent on surface ...... 1.9:1  FAILS — never do this (brief rule)
+*/
+@theme {
+  --color-primary: #1E3A5F;
+  --color-primary-deep: #162E4A;
+  --color-accent: #F5A623;
+  --color-support: #6B7280;
+  --color-surface: #F8F9FA;
+  --color-ink: #111827;
+
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /*
+    currentColor keeps the focus ring visible on both the light sections and the
+    slate ones — a fixed colour would vanish against one or the other.
+  */
+  :focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

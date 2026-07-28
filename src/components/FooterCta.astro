@@ -1,0 +1,49 @@
+---
+import CtaButton from './CtaButton.astro';
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-primary-deep text-white">
+  <section id="book" class="scroll-mt-8" aria-labelledby="book-heading">
+    <div class="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <h2
+        id="book-heading"
+        class="text-3xl font-semibold tracking-tight sm:text-4xl"
+      >
+        Start with the audit
+      </h2>
+
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/80">
+        It is free, it takes about a week, and you keep the findings whether or
+        not we end up working together.
+      </p>
+
+      <div class="mt-10">
+        {/*
+          TODO_CALENDAR_URL — when the Cal.com / Calendly link exists, pass it
+          here as `href` and this becomes a real link:
+              <CtaButton href="https://cal.com/..." />
+          Until then it renders an inert <button> on purpose, so nothing on the
+          page points at a URL that does not resolve.
+        */}
+        <CtaButton />
+      </div>
+
+      <p class="mt-6 text-sm text-white/60">
+        {/* TODO: caleb@latchpoint.co goes live once Google Workspace is set up. */}
+        Booking opens shortly. The audit itself is unchanged.
+      </p>
+    </div>
+  </section>
+
+  <div class="border-t border-white/10">
+    <div
+      class="mx-auto flex max-w-5xl flex-col items-center gap-4 px-6 py-8 text-sm text-white/60 sm:flex-row sm:justify-between"
+    >
+      <Logo class="text-white/80" />
+      <p>&copy; {year} Latchpoint LLC</p>
+    </div>
+  </div>
+</footer>

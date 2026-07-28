@@ -1,0 +1,31 @@
+---
+/*
+  The single CTA. Per the brief there is exactly one call to action on this
+  site, repeated — never a second competing button. Styled once here so both
+  placements stay identical.
+
+  With `href` it renders an anchor; without one it renders an inert <button>,
+  which is what the footer placement does until a booking URL exists.
+*/
+interface Props {
+  href?: string;
+  class?: string;
+}
+
+const { href, class: className = '' } = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center rounded-lg bg-accent px-7 py-4 ' +
+  'text-base font-semibold text-ink transition hover:brightness-95 ' +
+  'active:brightness-90 sm:text-lg';
+
+const label = 'Book a free AI audit';
+---
+
+{
+  href ? (
+    <a href={href} class={`${base} ${className}`}>{label}</a>
+  ) : (
+    <button type="button" class={`${base} ${className}`}>{label}</button>
+  )
+}

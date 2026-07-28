@@ -1,0 +1,27 @@
+---
+import CtaButton from './CtaButton.astro';
+
+// The hero CTA scrolls to the footer CTA rather than pointing at a booking URL,
+// which does not exist yet. One CTA, two placements, no dead link.
+---
+
+<section class="bg-primary text-white" aria-labelledby="hero-heading">
+  <div class="mx-auto max-w-5xl px-6 pt-16 pb-20 sm:pt-24 sm:pb-28">
+    <h1
+      id="hero-heading"
+      class="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl"
+    >
+      Your systems don't lack power.<br />
+      They lack <span class="text-accent">connection</span>.
+    </h1>
+
+    <p class="mt-7 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">
+      Latchpoint helps small and mid-sized businesses close the gap between the
+      software they bought and the work it was supposed to change.
+    </p>
+
+    <div class="mt-10">
+      <CtaButton href="#book" />
+    </div>
+  </div>
+</section>

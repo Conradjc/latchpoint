@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Problem from '../components/Problem.astro';
+import WhatIDo from '../components/WhatIDo.astro';
+import Outcome from '../components/Outcome.astro';
+import About from '../components/About.astro';
+import FooterCta from '../components/FooterCta.astro';
+
+const title = 'Latchpoint — AI and custom software that actually gets used';
+const description =
+  'Latchpoint helps small and mid-sized businesses close the gap between the software they bought and the work it was supposed to change. Founder-led AI audits and fixed-price implementation.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main>
+    <Hero />
+    <Problem />
+    <WhatIDo />
+    <Outcome />
+    <About />
+  </main>
+  <FooterCta />
+</BaseLayout>

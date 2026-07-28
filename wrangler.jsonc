@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "latchpoint",
+  "compatibility_date": "2026-07-27",
+
+  // No "main" field: this deploys static assets only, with no Worker script.
+  // Because there is no Worker, `run_worker_first` stays at its default of
+  // false and every request is served straight from the asset store.
+  "assets": {
+    "directory": "./dist",
+
+    // "404-page" serves dist/404.html with a real 404 status.
+    // The "single-page-application" mode would return the homepage with a 200
+    // for every unknown URL, which search engines treat as a soft 404.
+    "not_found_handling": "404-page"
+  }
+}
