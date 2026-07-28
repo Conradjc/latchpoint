@@ -20,7 +20,7 @@ Ship a fast, responsive, single-page consulting site from `design-brief.md`, dep
 - **Rule:** never amber on white for body text — Slate dominates, Amber is the spark.
 
 ## Page sections (build in order — copy lives in the brief)
-1. **Hero** — connection-gap headline, one-line subhead, single CTA "Book a free AI audit"
+1. **Hero** — connection-gap headline, one-line subhead, single CTA "Book a free systems audit"
 2. **Problem** — the gap: the tool got bought, nobody changed how they work
 3. **What I do** — short audit → find 2–3 highest-value opportunities → implement at a fixed price
 4. **Outcome** — "clients typically save 10+ hours/week within the first month"

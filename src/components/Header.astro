@@ -1,13 +1,15 @@
 ---
 import Logo from './Logo.astro';
+import PortalLink from './PortalLink.astro';
 
-// Wordmark only. No nav links and no button up here — the brief allows exactly
-// one CTA on the page, and putting a second one in the header would compete
-// with the hero.
+// Wordmark left, client portal right. No nav and no second button — the brief
+// allows exactly one call to action, so the portal is quiet text aimed at
+// existing clients rather than anything that competes with the hero CTA.
 ---
 
 <header class="bg-primary text-white">
-  <div class="mx-auto flex max-w-5xl items-center px-6 py-6">
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-6">
     <Logo href="/" class="text-white" />
+    <PortalLink />
   </div>
 </header>

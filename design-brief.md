@@ -21,9 +21,9 @@ Systems don't fail from lack of energy — they fail from lack of connection. La
 Real screens, clean diagrams, honest photos. NO stock handshakes, NO glowing brains, NO AI clichés.
 
 ## Landing page sections (in order)
-1. **Hero** — headline (the connection thesis), one-line subhead, single CTA: "Book a free AI audit"
+1. **Hero** — headline (the connection thesis), one-line subhead, single CTA: "Book a free systems audit"
 2. **Problem** — the gap: bought the tool, nobody changed how they work
-3. **What I do** — short AI audit → find 2–3 highest-value opportunities → implement at fixed price
+3. **What I do** — short systems audit → find 2–3 highest-value opportunities → implement at fixed price
 4. **Outcome** — "clients typically save 10+ hours/week within the first month"
 5. **About** — founder-led, the latchpoint story (brief)
 6. **CTA footer** — book a call (calendar link)

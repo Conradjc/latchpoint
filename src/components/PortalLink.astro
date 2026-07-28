@@ -1,0 +1,45 @@
+---
+/*
+  Entry point for existing clients — content, resources and updates on their
+  project. Deliberately NOT a button: the brief allows exactly one call to
+  action, and this serves a different audience (people who already hired us)
+  than the CTA does. Quiet text keeps the amber CTA the only thing on the page
+  that reads as an action.
+
+  Mirrors CtaButton: renders a real link when given `href`, inert text when not.
+*/
+interface Props {
+  href?: string;
+  class?: string;
+}
+
+const { href, class: className = '' } = Astro.props;
+
+const label = 'Project Portal';
+const base = 'text-sm font-medium transition';
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class={`${base} text-white/80 underline-offset-4 hover:text-white hover:underline ${className}`}
+    >
+      {label}
+    </a>
+  ) : (
+    /*
+      TODO_PORTAL_URL — once the portal exists, pass it here and this becomes a
+      real link:
+          <PortalLink href="https://..." />
+      Until then it renders as plain text rather than a link that goes nowhere.
+      Muted one step below the linked state so it does not invite a click, but
+      no further: white/70 is 6.5:1 on slate and white/60 is 5.2:1, both of
+      which clear AA. white/50 would look right and fail at 4.2:1.
+    */
+    <span class={`${base} text-white/70 ${className}`}>
+      {label}
+      <span class="ml-1.5 text-white/60">(soon)</span>
+    </span>
+  )
+}
