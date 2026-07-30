@@ -87,7 +87,7 @@ redirect rule sending `www` to the apex.
 | What | Where | Notes |
 |---|---|---|
 | `INQUIRY_TO` secret | Cloudflare | The form's destination inbox. Set with `npx wrangler secret put INQUIRY_TO`. Until it exists — and until `latchpoint.co` is onboarded to Email Sending — submissions land on `/sorry/`. See [`CLAUDE.md`](CLAUDE.md). |
-| `TODO_PORTAL_URL` | [`src/components/PortalLink.astro`](src/components/PortalLink.astro) | Destination decided — `https://projects.latchpoint.co` — but not built yet, so the header link renders as muted text marked *(soon)*. Pass `href` to `PortalLink` in [`Header.astro`](src/components/Header.astro) once the portal is live. Portal architecture and Access gotchas are in [`CLAUDE.md`](CLAUDE.md). |
+| ~~`TODO_PORTAL_URL`~~ | — | **Done.** The header links to `https://projects.latchpoint.co`, which is live and gated by Cloudflare Access. Built in the separate `latchpoint-portal` repo. |
 | `caleb@latchpoint.co` | not yet on the page | Waiting on Google Workspace. |
 | Logo | [`src/components/Logo.astro`](src/components/Logo.astro), [`public/favicon.svg`](public/favicon.svg) | Placeholder mark — an open square latched shut at one corner. Refine later. |
 
